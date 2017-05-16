@@ -1,358 +1,347 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "description": "This is a sample blog server that exposes api endpoints to manage users, posts & comments.",
-    "version": "1.0.0",
-    "title": "Yo Blog",
-    "termsOfService": "http://yoweb.log/terms/",
-    "contact": {
-      "email": "apiteam@yoweb.log"
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample blog server that exposes api endpoints to manage users, posts & comments.",
+        "version": "1.0.0",
+        "title": "Yo Blog",
+        "termsOfService": "http://yoweb.log/terms/",
+        "contact": {
+            "email": "apiteam@yoweb.log"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
     },
-    "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-    }
-  },
-  "host": "52.175.244.3:8080",
-  "basePath": "/",
-  "tags": [
-    {
-      "name": "User Operations",
-      "description": "Operations about user",
-      "externalDocs": {
-        "description": "Find out more about our blog users",
+    "host": "52.175.244.3:8080",
+    "basePath": "/",
+    "tags": [{
+            "name": "User Operations",
+            "description": "Operations about user",
+            "externalDocs": {
+                "description": "Find out more about our blog users",
+                "url": "http://yoweb.log"
+            }
+        },
+        {
+            "name": "Post Operations",
+            "description": "Operations about blog posts & comments",
+            "externalDocs": {
+                "description": "Find out more about our blog posts",
+                "url": "http://yoweb.log"
+            }
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/posts": {
+            "get": {
+                "tags": [
+                    "Post Operations"
+                ],
+                "summary": "Fetch a list of all posts",
+                "description": "This operation fetches all posts",
+                "operationId": "findPosts",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get a list of all system posts",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "$ref": "#/definitions/Post"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Post Operations"
+                ],
+                "summary": "Create post",
+                "description": "This operation creates a new post",
+                "operationId": "createPost",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                    "in": "body",
+                    "name": "body",
+                    "description": "Created post object",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/Post"
+                    }
+                }],
+                "responses": {
+                    "201": {
+                        "description": "successful operation"
+                    },
+                    "500": {
+                        "description": "operation unsuccessful"
+                    }
+                }
+            }
+        },
+        "/posts/{postId}": {
+            "get": {
+                "tags": [
+                    "Post Operations"
+                ],
+                "summary": "Find post by ID",
+                "description": "Returns a single post",
+                "operationId": "findPostById",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                    "name": "postId",
+                    "in": "path",
+                    "description": "ID of post to return",
+                    "required": true,
+                    "type": "integer",
+                    "format": "int64"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Post"
+                        }
+                    }
+                }
+            }
+        },
+        "/posts/{postId}/comments": {
+            "get": {
+                "tags": [
+                    "Post Operations"
+                ],
+                "summary": "Find comments by post ID",
+                "description": "Returns a list of comments for a given post",
+                "operationId": "findCommentsByPostId",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                    "name": "postId",
+                    "in": "path",
+                    "description": "ID of post",
+                    "required": true,
+                    "type": "integer",
+                    "format": "int64"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "$ref": "#/definitions/Comment"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Post not found"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "User Operations"
+                ],
+                "summary": "Fetch a list of all users",
+                "description": "This operation fetches all users",
+                "operationId": "findUsers",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get a list of all system users",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "$ref": "#/definitions/User"
+                            },
+                            "xml": {
+                                "name": "Users",
+                                "wrapped": true
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "User Operations"
+                ],
+                "summary": "Create user",
+                "description": "This operation creates a new user.",
+                "operationId": "createUser",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [{
+                    "in": "body",
+                    "name": "body",
+                    "description": "Created user object",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/User"
+                    }
+                }],
+                "responses": {
+                    "201": {
+                        "description": "successful operation"
+                    },
+                    "500": {
+                        "description": "operation unsuccessful"
+                    }
+                }
+            }
+        },
+        "/users/{userId}": {
+            "get": {
+                "tags": [
+                    "User Operations"
+                ],
+                "summary": "Find user by ID",
+                "description": "Returns a single user",
+                "operationId": "findUserById",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                    "name": "userId",
+                    "in": "path",
+                    "description": "ID of user to return",
+                    "required": true,
+                    "type": "integer",
+                    "format": "int64"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Address": {
+            "type": "object",
+            "properties": {
+                "street": {
+                    "type": "string"
+                },
+                "suite": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "zipcode": {
+                    "type": "string"
+                },
+                "geo": {
+                    "type": "object",
+                    "$ref": "#/definitions/Geo"
+                }
+            }
+        },
+        "Comment": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "postId": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "body": {
+                    "type": "string"
+                }
+            }
+        },
+        "Geo": {
+            "type": "object",
+            "properties": {
+                "lat": {
+                    "type": "string"
+                },
+                "lng": {
+                    "type": "string"
+                }
+            }
+        },
+        "Post": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "userId": {
+                    "type": "number"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "body": {
+                    "type": "string"
+                }
+            }
+        },
+        "User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "object",
+                    "$ref": "#/definitions/Address"
+                }
+            },
+            "xml": {
+                "name": "User"
+            }
+        }
+    },
+    "externalDocs": {
+        "description": "Find out more about Swagger",
         "url": "http://yoweb.log"
-      }
-    },
-    {
-      "name": "Post Operations",
-      "description": "Operations about blog posts & comments",
-      "externalDocs": {
-        "description": "Find out more about our blog posts",
-        "url": "http://yoweb.log"
-      }
     }
-  ],
-  "schemes": [
-    "http"
-  ],
-  "paths": {
-    "/posts": {
-      "get": {
-        "tags": [
-          "Post Operations"
-        ],
-        "summary": "Fetch a list of all posts",
-        "description": "This operation fetches all posts",
-        "operationId": "findPosts",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Get a list of all system posts",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "$ref": "#/definitions/Post"
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Post Operations"
-        ],
-        "summary": "Create post",
-        "description": "This operation creates a new post",
-        "operationId": "createPostr",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Created post object",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Post"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "successful operation"
-          },
-          "500": {
-            "description": "operation unsuccessful"
-          }
-        }
-      }
-    },
-    "/posts/{postId}": {
-      "get": {
-        "tags": [
-          "Post Operations"
-        ],
-        "summary": "Find post by ID",
-        "description": "Returns a single post",
-        "operationId": "findPostById",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "postId",
-            "in": "path",
-            "description": "ID of post to return",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/Post"
-            }
-          }
-        }
-      }
-    },
-    "/posts/{postId}/comments": {
-      "get": {
-        "tags": [
-          "Post Operations"
-        ],
-        "summary": "Find comments by post ID",
-        "description": "Returns a list of comments for a given post",
-        "operationId": "findCommentsByPostId",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "postId",
-            "in": "path",
-            "description": "ID of post",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "$ref": "#/definitions/Comment"
-              }
-            }
-          },
-          "404": {
-            "description": "Post not found"
-          }
-        }
-      }
-    },
-    "/users": {
-      "get": {
-        "tags": [
-          "User Operations"
-        ],
-        "summary": "Fetch a list of all users",
-        "description": "This operation fetches all users",
-        "operationId": "findUsers",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Get a list of all system users",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "$ref": "#/definitions/User"
-              },
-              "xml": {
-                "name": "Users",
-                "wrapped": true
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "User Operations"
-        ],
-        "summary": "Create user",
-        "description": "This operation creates a new user.",
-        "operationId": "createUser",
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Created user object",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "successful operation"
-          },
-          "500": {
-            "description": "operation unsuccessful"
-          }
-        }
-      }
-    },
-    "/users/{userId}": {
-      "get": {
-        "tags": [
-          "User Operations"
-        ],
-        "summary": "Find user by ID",
-        "description": "Returns a single user",
-        "operationId": "findUserById",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "ID of user to return",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          },
-          "404": {
-            "description": "User not found"
-          }
-        }
-      }
-    }
-  },
-  "definitions": {
-    "Address": {
-      "type": "object",
-      "properties": {
-        "street": {
-          "type": "string"
-        },
-        "suite": {
-          "type": "string"
-        },
-        "city": {
-          "type": "string"
-        },
-        "zipcode": {
-          "type": "string"
-        },
-        "geo": {
-          "type": "object",
-          "$ref": "#/definitions/Geo"
-        }
-      }
-    },
-    "Comment": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "number"
-        },
-        "postId": {
-          "type": "number"
-        },
-        "name": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "body": {
-          "type": "string"
-        }
-      }
-    },
-    "Geo": {
-      "type": "object",
-      "properties": {
-        "lat": {
-          "type": "string"
-        },
-        "lng": {
-          "type": "string"
-        }
-      }
-    },
-    "Post": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "number"
-        },
-        "userId": {
-          "type": "number"
-        },
-        "title": {
-          "type": "string"
-        },
-        "body": {
-          "type": "string"
-        }
-      }
-    },
-    "User": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "number"
-        },
-        "name": {
-          "type": "string"
-        },
-        "username": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "address": {
-          "type": "object",
-          "$ref": "#/definitions/Address"
-        }
-      },
-      "xml": {
-        "name": "User"
-      }
-    }
-  },
-  "externalDocs": {
-    "description": "Find out more about Swagger",
-    "url": "http://yoweb.log"
-  }
 }

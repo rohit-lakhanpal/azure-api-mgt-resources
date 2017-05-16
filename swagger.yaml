@@ -49,7 +49,7 @@ paths:
       - "Post Operations"
       summary: "Create post"
       description: "This operation creates a new post"
-      operationId: "createPostr"
+      operationId: "createPost"
       produces:
       - "application/json"
       parameters:
