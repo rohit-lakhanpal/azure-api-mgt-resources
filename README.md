@@ -5,13 +5,24 @@ This repository contains all relevant assets required to follow the "Azure API M
 You can host the contents of the db.json file using the following commands (assuming you have nodejs/npm installed)
 > npm install -g json-server
 
+> npm install -g bootprint
+
+> npm install -g bootprint-openapi
+
+> bootprint openapi https://raw.githubusercontent.com/rohit-lakhanpal/azure-api-mgt-resources/master/swagger.json public
+
 > wget https://raw.githubusercontent.com/rohit-lakhanpal/azure-api-mgt-resources/master/db.json
 
 > json-server --port 8080 --watch db.json & disown
 
 If all your pre-requisites are met, you should now be able to host apis based off the db.json. 
 ```
-root@usw2-apidemo-server01:~# sudo npm install -g json-server
+root@usw2-apidemo-server01:~# npm install -g json-server
+...
+root@usw2-apidemo-server01:~# npm install -g bootprint
+...
+root@usw2-apidemo-server01:~# npm install -g bootprint-openapi
+...
 root@usw2-apidemo-server01:~# wget https://raw.githubusercontent.com/rohit-lakhanpal/azure-api-mgt-resources/master/db.json
 root@usw2-apidemo-server01:~# json-server --watch db.json --port 8080 & disown
 [1] 22862
