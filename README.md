@@ -1,5 +1,5 @@
 # azure-api-mgt-resources
-This repository contains all relevant assets required to follow the "Azure API Management" series of blog posts at http://blog.rohitl.com/2017/05/azure-api-management.html
+This repository contains all relevant assets required to follow the "Azure API Management" series of blog posts at https://devtasks.blogspot.com/2017/05/azure-api-management.html
 
 # getting started
 You can host the contents of the db.json file using the following commands (assuming you have nodejs/npm installed)
